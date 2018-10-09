@@ -9,3 +9,5 @@ Instructions:
 > Selected the wrong image? Go to File -> Reset to clear image
 
 Instructions also avaliable via Help -> Instructions
+
+Note: Inspiration came from the HBO show "Silicon Valley"
