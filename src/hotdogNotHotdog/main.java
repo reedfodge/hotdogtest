@@ -97,7 +97,7 @@ public class main {
 		JButton button = new JButton("Test");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean res = testImage();
+				boolean res = testImage(getImage());
 				isTrue(res);
 			}
 		});
@@ -162,14 +162,20 @@ public class main {
 		return bimage;
 	}
 	
+	double total = 0;
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	public double getTotal() {
+		return total;
+	}
 	/**
 	 * Tests image uploaded to GUI to determine if it is a hot dog
 	 * @return If images are the same
 	 */
-	public static boolean testImage() {
-		Image image = getImage();
+	public boolean testImage(Image image) {
 		boolean totalRes = false;
-		double total = 0;
+		double total = getTotal();
 		BufferedImage testImage = toBufferedImage(image);
 		BufferedImage controlImage = null;
 		try {
@@ -178,23 +184,37 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		System.out.println("Control Width: " + controlImage.getWidth());
+		System.out.println("Test Width: " + testImage.getWidth());
+		System.out.println("Control Height: " + controlImage.getHeight());
+		System.out.println("Test Height: " + testImage.getHeight());
 
-		if(testImage.getHeight() == controlImage.getHeight() && testImage.getWidth() == controlImage.getWidth()) {
+		int W = controlImage.getWidth() - testImage.getWidth();
+		int T = controlImage.getHeight() - testImage.getHeight();
+		
+		if(W == 0 && T == 0) {
+			System.out.println("Similar");
 			for(int y = 0; y < testImage.getHeight(); y++) {
 				for(int x = 0; x < testImage.getWidth(); x++) {
 					//Uses Mean Square Error to determine difference in images
 					total += Math.pow(controlImage.getRGB(x, y) - testImage.getRGB(x, y), 2);
+					System.out.println(total);
 				}
 			}
-		}
-		
-		if(total != 0) {
-			totalRes = false;
+			//totalRes = true;
 		}
 		else {
+			System.out.println("Not Similar");
+			total = 1;
+			totalRes = false;
+		}
+		
+		if(total == 0) {
 			totalRes = true;
 		}
 		
+		System.out.println(String.valueOf(totalRes));
 		return totalRes;
 		
 		
@@ -211,11 +231,12 @@ public class main {
 		frame.setSize(300, 100);
 		if(res == true) {
 			frame.getContentPane().add(BorderLayout.CENTER, t);
-		}
+			System.out.println("True 2");
+		} 
 		else {
 			frame.getContentPane().add(BorderLayout.CENTER, f);
+			System.out.println("False 2");
 		}
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 }
