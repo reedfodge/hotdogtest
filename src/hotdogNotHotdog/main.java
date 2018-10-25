@@ -73,6 +73,9 @@ public class main {
 		//Adds action for Upload Image
 		m11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.remove(label);
+				frame.repaint();
+				frame.revalidate();
 				fc.addChoosableFileFilter(new FileNameExtensionFilter("Image files",
 				          new String[] { "png", "jpg", "jpeg", "gif" }));
 				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -209,6 +212,8 @@ public class main {
 			total = 1;
 			totalRes = false;
 		}
+		
+		System.out.println(total);
 		
 		if(total == 0) {
 			totalRes = true;
